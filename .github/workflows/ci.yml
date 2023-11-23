@@ -1,0 +1,62 @@
+name: CI/CD 워크플로우
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+env:
+  IMAGE_TAG: dev-0
+
+jobs:
+
+  docker_build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
+
+      - name: QEMU 설정
+        uses: docker/setup-qemu-action@v1
+
+      - name: Docker Buildx 설정
+        uses: docker/setup-buildx-action@v1
+
+      - name: DockerHub에 로그인
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: 빌드 및 푸쉬
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: awdfaf/be-recommemdation:${{ env.IMAGE_TAG }}
+          platforms: linux/amd64
+          build-args: 
+            COLOR=${{ env.IMAGE_TAG }}
+
+  deploy:
+    needs: docker_build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
+
+      - name: values.yaml 수정 및 푸쉬
+        run: |
+          git config user.email "awdfaf@kakao.com"
+          git config user.name "moa"
+          sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
+          git add ./helm-charts/values.yaml
+          git commit -m 'BE-RECOMMENDATION CI/CD Pipeline Job'
+          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-RECOMMENDATION.git
+          git push -u origin develop
