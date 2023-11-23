@@ -3,12 +3,10 @@ FROM python:3.9
 
 # Install required packages
 RUN apt-get update && \
-  apt-get install -y software-properties-common && \
-  add-apt-repository 'deb http://security.debian.org/debian-security bookworm/updates main' && \
-  apt-get update && \
-  apt-get install -y ffmpeg openjdk-11-jdk && \
+  apt-get install -y ffmpeg openjdk-8-jdk && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
 
 
 # Set the working directory in the container to /app
