@@ -1,9 +1,9 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9
+# Use a different base image
+FROM python:3.9-slim-buster
 
 # Install required packages
 RUN apt-get update && \
-  apt-get install -y ffmpeg openjdk-8-jdk && \
+  apt-get install -y ffmpeg openjdk-11-jdk && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
