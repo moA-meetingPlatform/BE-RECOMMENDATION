@@ -38,7 +38,7 @@ def update_model():
 
 
 # 추천 API 엔드포인트
-@app.route('/recommend', methods=['POST'])
+@app.route('/api/v1/recommendation', methods=['POST'])
 def recommend():
     logging.info("추천 API 호출 시작")
     data = request.get_json()
@@ -74,6 +74,13 @@ def recommend():
     except Exception as e:
         logging.error(f"오류 발생: {str(e)}")
         return api_response.error_response("추천 중 오류 발생.", 500)
+
+
+@app.route('/api/v1/recommendation/test', methods=['POST'])
+def recommendation_test():
+    print("test")
+    return "Success"
+
 
 if __name__ == '__main__':
     # 모델 초기 업데이트
