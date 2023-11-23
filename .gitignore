@@ -28,3 +28,10 @@ gradle-app.setting
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+#### Pycharm IDEA ####
+venv
+*.pyc
+.env
+database.py
+```
