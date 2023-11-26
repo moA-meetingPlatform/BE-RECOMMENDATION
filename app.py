@@ -3,7 +3,7 @@ import api_response
 from flask import Flask, request
 from datetime import datetime
 import uuid
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
 import recommendation as rec
 import database as db
 import model
@@ -76,7 +76,7 @@ def recommend():
         return api_response.error_response("추천 중 오류 발생.", 500)
 
 
-@app.route('/api/v1/recommendation/test', methods=['POST'])
+@app.route('/api/v1/recommendation/test', methods=['GET'])
 def recommendation_test():
     print("test")
     return "Success"
@@ -85,4 +85,4 @@ def recommendation_test():
 if __name__ == '__main__':
     # 모델 초기 업데이트
     update_model()
-    app.run(debug=True, port=8751)
+    app.run(debug=True, host="0.0.0.0", port=8751)
