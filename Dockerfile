@@ -1,7 +1,7 @@
 # Use a different base image
 FROM python:3.9-slim-buster
 
-# ÇÊ¿äÇÑ ÆÐÅ°Áö ¼³Ä¡
+# ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½Ä¡
 RUN apt-get update && apt-get install -y libcurl4-openssl-dev libssl-dev build-essential
 
 # Copy the current directory contents into the container at /app
@@ -13,8 +13,10 @@ WORKDIR /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# °³¹ßÈ¯°æ
+# ï¿½ï¿½ï¿½ï¿½È¯ï¿½ï¿½
 ENV FLASK_ENV=development
+
+EXPOSE 8000
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
