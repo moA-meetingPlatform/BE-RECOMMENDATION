@@ -51,7 +51,7 @@ def recommend():
         top_3_recommendations = rec.hybrid_recommendation(
             user_uuid, trained_model, meeting_category_list_data,
             user_category_data, now, meeting_data
-        )[:3]
+        )
 
         logging.info("추천 API 호출 완료")
         return api_response.success_response(top_3_recommendations, "성공")

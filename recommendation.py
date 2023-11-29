@@ -43,7 +43,7 @@ def hybrid_recommendation(user_uuid, model, meeting_category_list_df, user_profi
                 scores.append((meeting_id, hybrid_score))
 
         # 점수가 가장 높은 상위 3개 미팅 추출
-        top_3_meetings = sorted(scores, key=lambda x: x[1], reverse=True)[:3]
+        top_3_meetings = sorted(scores, key=lambda x: x[1], reverse=True)
 
         # 로깅 완료 메시지
         logging.info("Hybrid recommendation complete")
